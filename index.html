@@ -49,7 +49,6 @@
       isolation: isolate;
     }
 
-    /* ENTRADA GERAL (FADE + ZOOM) */
     body.ready .convite {
       animation: fadeZoomIn 1.2s cubic-bezier(.22,.61,.36,1) both;
     }
@@ -74,7 +73,6 @@
       z-index: -3;
     }
 
-    /* FUNDO FLORAL */
     body::before {
       background:
         radial-gradient(22vmax 22vmax at 9% 9%, var(--petal-1) 0%, transparent 62%),
@@ -103,7 +101,6 @@
       opacity: 0.75;
     }
 
-    /* PARTÍCULAS LEVES */
     .particles {
       position: fixed;
       inset: 0;
@@ -135,7 +132,6 @@
       }
     }
 
-    /* PÉTALAS CAINDO */
     .petals {
       position: fixed;
       inset: 0;
@@ -203,15 +199,18 @@
     h1,
     .data,
     .frase,
-    .btn {
+    .btn,
+    .countdown-title,
+    .countdown-grid {
       opacity: 0;
       transform: translateY(10px);
     }
 
-    /* TEXTO SURGINDO */
     body.ready h1 { animation: textIn .8s ease forwards .35s; }
     body.ready .data { animation: textIn .8s ease forwards .55s; }
     body.ready .frase { animation: textIn .9s ease forwards .75s; }
+    body.ready .countdown-title { animation: textIn .9s ease forwards .9s; }
+    body.ready .countdown-grid { animation: textIn .9s ease forwards 1.05s; }
 
     @keyframes textIn {
       to {
@@ -241,10 +240,68 @@
       font-style: italic;
       font-size: clamp(1rem, 4.1vw, 1.25rem);
       line-height: 1.55;
-      margin-bottom: clamp(26px, 6vw, 38px);
+      margin-bottom: clamp(18px, 4.5vw, 26px);
       opacity: 0.95;
       color: #4d6788;
       padding-inline: clamp(4px, 2vw, 24px);
+    }
+
+    .countdown {
+      margin: 0 auto clamp(26px, 6vw, 38px);
+      width: min(100%, 560px);
+      padding: clamp(14px, 3vw, 18px);
+      border: 1px solid color-mix(in oklab, #9cb8d8 45%, white);
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.75), rgba(240,247,255,0.55));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.75);
+    }
+
+    .countdown-title {
+      font-size: clamp(0.92rem, 3.4vw, 1rem);
+      letter-spacing: .35px;
+      color: #55759d;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .countdown-item {
+      background: rgba(255,255,255,.8);
+      border: 1px solid rgba(144, 173, 207, 0.35);
+      border-radius: 10px;
+      padding: 8px 6px;
+      min-height: 70px;
+      display: grid;
+      align-content: center;
+      justify-items: center;
+    }
+
+    .countdown-value {
+      font-size: clamp(1.1rem, 5vw, 1.6rem);
+      font-weight: 600;
+      color: #355b88;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .countdown-label {
+      margin-top: 6px;
+      font-size: clamp(0.72rem, 2.8vw, 0.82rem);
+      letter-spacing: 0.3px;
+      color: #5d7ea5;
+      text-transform: uppercase;
+    }
+
+    .countdown-finished {
+      font-size: clamp(1rem, 3.8vw, 1.15rem);
+      color: #355b88;
+      font-style: italic;
+      padding: 8px 4px;
     }
 
     .btn {
@@ -266,24 +323,14 @@
       transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
     }
 
-    /* BOTÃO CRESCENDO */
     body.ready .btn {
-      animation: popIn .65s cubic-bezier(.2,.9,.25,1.2) forwards 1s;
+      animation: popIn .65s cubic-bezier(.2,.9,.25,1.2) forwards 1.2s;
     }
 
     @keyframes popIn {
-      0% {
-        opacity: 0;
-        transform: scale(0.85);
-      }
-      75% {
-        opacity: 1;
-        transform: scale(1.05);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1);
-      }
+      0% { opacity: 0; transform: scale(0.85); }
+      75% { opacity: 1; transform: scale(1.05); }
+      100% { opacity: 1; transform: scale(1); }
     }
 
     .btn:hover {
@@ -307,6 +354,14 @@
       .convite { border-radius: 16px; }
       .btn { width: min(100%, 280px); }
       .petal { width: 14px; height: 10px; }
+      .countdown-grid { gap: 6px; }
+      .countdown-item { min-height: 64px; }
+    }
+
+    @media (max-width: 420px) {
+      .countdown-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
 
     @media (max-width: 360px) {
@@ -324,7 +379,12 @@
       h1,
       .data,
       .frase,
-      .btn { opacity: 1 !important; transform: none !important; }
+      .btn,
+      .countdown-title,
+      .countdown-grid {
+        opacity: 1 !important;
+        transform: none !important;
+      }
     }
   </style>
 </head>
@@ -336,6 +396,30 @@
     <h1>Felipe &amp; Paula</h1>
     <p class="data">17 Outubro 2026</p>
     <p class="frase">"O amor nunca falha."</p>
+
+    <section class="countdown" aria-label="Contagem regressiva para o casamento">
+      <p class="countdown-title">Faltam para o grande dia</p>
+      <div class="countdown-grid" id="countdownGrid">
+        <div class="countdown-item">
+          <span class="countdown-value" id="days">00</span>
+          <span class="countdown-label">Dias</span>
+        </div>
+        <div class="countdown-item">
+          <span class="countdown-value" id="hours">00</span>
+          <span class="countdown-label">Horas</span>
+        </div>
+        <div class="countdown-item">
+          <span class="countdown-value" id="minutes">00</span>
+          <span class="countdown-label">Minutos</span>
+        </div>
+        <div class="countdown-item">
+          <span class="countdown-value" id="seconds">00</span>
+          <span class="countdown-label">Segundos</span>
+        </div>
+      </div>
+      <p id="countdownFinished" class="countdown-finished" hidden>Chegou o grande dia! 💙</p>
+    </section>
+
     <a class="btn" href="#presentes">Lista de Presentes</a>
   </main>
 
@@ -370,8 +454,52 @@
       }
     }
 
+    function startCountdown() {
+      const targetDate = new Date('2026-10-17T10:00:00-03:00').getTime();
+
+      const daysEl = document.getElementById('days');
+      const hoursEl = document.getElementById('hours');
+      const minutesEl = document.getElementById('minutes');
+      const secondsEl = document.getElementById('seconds');
+      const gridEl = document.getElementById('countdownGrid');
+      const doneEl = document.getElementById('countdownFinished');
+
+      const pad = (n) => String(n).padStart(2, '0');
+
+      function update() {
+        const now = Date.now();
+        const diff = targetDate - now;
+
+        if (diff <= 0) {
+          daysEl.textContent = '00';
+          hoursEl.textContent = '00';
+          minutesEl.textContent = '00';
+          secondsEl.textContent = '00';
+          gridEl.hidden = true;
+          doneEl.hidden = false;
+          clearInterval(timer);
+          return;
+        }
+
+        const totalSeconds = Math.floor(diff / 1000);
+        const days = Math.floor(totalSeconds / (24 * 60 * 60));
+        const hours = Math.floor((totalSeconds % (24 * 60 * 60)) / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+
+        daysEl.textContent = pad(days);
+        hoursEl.textContent = pad(hours);
+        minutesEl.textContent = pad(minutes);
+        secondsEl.textContent = pad(seconds);
+      }
+
+      update();
+      const timer = setInterval(update, 1000);
+    }
+
     createParticles(22);
     createPetals(16);
+    startCountdown();
 
     requestAnimationFrame(() => {
       document.body.classList.add('ready');
