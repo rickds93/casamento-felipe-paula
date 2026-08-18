@@ -4,9 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Felipe & Paula</title>
+
+  <!-- Fontes: script para nomes + serif elegante para demais textos -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Great+Vibes&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --bg: #f8fbff;
@@ -214,29 +217,35 @@
       }
     }
 
+    /* Nome dos noivos (script) */
     h1 {
-      font-family: "Alex Brush", cursive;
-  font-weight: 400;
-  letter-spacing: 0.2px;
-  color: #1f4a78;
-  font-size: clamp(3rem, 12vw, 5.2rem);
-  line-height: 0.95;
-  margin-bottom: 16px;
+      font-family: "Great Vibes", cursive;
+      font-size: clamp(3rem, 12vw, 5.4rem);
+      line-height: 0.95;
+      font-weight: 400;
+      margin-bottom: 16px;
+      letter-spacing: 0.3px;
+      color: #1f4a78;
+      text-wrap: balance;
     }
 
+    /* Demais textos (serif elegante) */
     .data {
-      font-size: clamp(1.05rem, 4.4vw, 1.5rem);
+      font-family: "Cormorant Garamond", serif;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      font-size: clamp(1.5rem, 5.2vw, 2.3rem);
       margin-bottom: clamp(20px, 5vw, 30px);
-      letter-spacing: 0.45px;
-      color: #3e5f89;
+      color: #1f4a78;
     }
 
     .frase {
+      font-family: "Cormorant Garamond", serif;
       font-style: italic;
-      font-size: clamp(1rem, 4.1vw, 1.25rem);
-      line-height: 1.55;
+      font-size: clamp(1.25rem, 4.2vw, 1.7rem);
+      line-height: 1.45;
       margin-bottom: clamp(18px, 4.5vw, 26px);
-      color: #4d6788;
+      color: #355b88;
       padding-inline: clamp(4px, 2vw, 24px);
     }
 
@@ -251,11 +260,13 @@
     }
 
     .countdown-title {
-      font-size: clamp(0.92rem, 3.4vw, 1rem);
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(1rem, 3.5vw, 1.2rem);
       letter-spacing: .35px;
       color: #55759d;
       margin-bottom: 10px;
       text-transform: uppercase;
+      font-weight: 600;
     }
 
     .countdown-grid {
@@ -276,7 +287,8 @@
     }
 
     .countdown-value {
-      font-size: clamp(1.1rem, 5vw, 1.6rem);
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(1.2rem, 5vw, 1.8rem);
       font-weight: 600;
       color: #355b88;
       line-height: 1;
@@ -284,21 +296,26 @@
     }
 
     .countdown-label {
+      font-family: "Cormorant Garamond", serif;
       margin-top: 6px;
-      font-size: clamp(0.72rem, 2.8vw, 0.82rem);
+      font-size: clamp(0.8rem, 2.8vw, 0.92rem);
       letter-spacing: 0.3px;
       color: #5d7ea5;
       text-transform: uppercase;
+      font-weight: 500;
     }
 
     .countdown-finished {
-      font-size: clamp(1rem, 3.8vw, 1.15rem);
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(1.2rem, 3.8vw, 1.4rem);
       color: #355b88;
       font-style: italic;
       padding: 8px 4px;
+      font-weight: 500;
     }
 
     .btn {
+      font-family: "Cormorant Garamond", serif;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -308,12 +325,14 @@
       min-height: 48px;
       padding: 12px 24px;
       border-radius: 999px;
-      font-size: clamp(0.95rem, 3.8vw, 1.02rem);
+      font-size: clamp(1.05rem, 3.8vw, 1.2rem);
+      font-weight: 600;
       border: 1px solid rgba(255, 255, 255, 0.35);
       box-shadow:
         0 8px 20px rgba(73, 111, 158, 0.33),
         inset 0 1px 0 rgba(255, 255, 255, 0.35);
       transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+      letter-spacing: 0.3px;
     }
 
     body.ready .btn {
@@ -356,7 +375,7 @@
 
     @media (max-width: 360px) {
       .convite { padding-inline: 14px; }
-      h1 { font-size: clamp(1.7rem, 9.2vw, 2rem); }
+      h1 { font-size: clamp(2.4rem, 13vw, 3.1rem); }
     }
 
     @media (prefers-reduced-motion: reduce) {
