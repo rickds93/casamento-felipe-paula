@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Felipe & Paula</title>
+  <title>Paula & Felipe</title>
 
   <!-- Fontes: script para nomes + serif elegante para demais textos -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,7 +18,7 @@
   <div class="petals" aria-hidden="true"></div>
 
   <main class="convite">
-    <h1>Felipe &amp; Paula</h1>
+    <h1>Paula &amp; Felipe</h1>
     <p class="data">17 Outubro 2026</p>
     <p class="frase">"O amor nunca falha."</p>
 
@@ -45,8 +45,62 @@
       <p id="countdownFinished" class="countdown-finished" hidden>Chegou o grande dia! 💙</p>
     </section>
 
-    <a class="btn" href="lista-de-presentes.html">Lista de Presentes</a>
+    <div class="buttons-container">
+      <a class="btn" href="lista-de-presentes.html">Lista de Presentes</a>
+      <button class="btn btn-confirm" id="confirmBtn" type="button">Confirmar Presença</button>
+    </div>
   </main>
+
+  <!-- Modal de Confirmação -->
+  <div id="confirmModal" class="modal" hidden>
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <button class="modal-close" id="closeBtn" type="button" aria-label="Fechar">&times;</button>
+      <h2>Confirme sua Presença</h2>
+      <form id="confirmForm">
+        <div class="form-group">
+          <label for="name">Nome *</label>
+          <input type="text" id="name" name="name" required placeholder="Seu nome completo">
+        </div>
+        
+        <div class="form-group">
+          <label for="email">E-mail *</label>
+          <input type="email" id="email" name="email" required placeholder="seu@email.com">
+        </div>
+        
+        <div class="form-group">
+          <label for="phone">Telefone *</label>
+          <input type="tel" id="phone" name="phone" required placeholder="(00) 00000-0000">
+        </div>
+        
+        <div class="form-group">
+          <label for="guests">Número de Acompanhantes *</label>
+          <select id="guests" name="guests" required>
+            <option value="">Selecione</option>
+            <option value="0">Nenhum</option>
+            <option value="1">1 pessoa</option>
+            <option value="2">2 pessoas</option>
+            <option value="3">3 ou mais</option>
+          </select>
+        </div>
+
+        <div class="form-group checkbox">
+          <label for="dietary">
+            <input type="checkbox" id="dietary" name="dietary">
+            Tenho restrição alimentar
+          </label>
+        </div>
+
+        <div class="form-group" id="dietaryDetails" hidden>
+          <label for="dietaryText">Descreva sua restrição</label>
+          <textarea id="dietaryText" name="dietaryText" placeholder="Ex: vegetariano, alergia a glúten..."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-submit">Enviar Confirmação</button>
+      </form>
+      <p class="modal-success" id="successMessage" hidden>✅ Presença confirmada com sucesso!</p>
+    </div>
+  </div>
 
   <!-- Arquivo JavaScript externo -->
   <script src="script.js"></script>
