@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Felipe & Paula</title>
   <style>
     :root {
@@ -11,67 +11,130 @@
       --accent: #8c6a4d;
       --button-bg: #8c6a4d;
       --button-text: #ffffff;
+      --line: #cfc3b6;
+      --card: #fffdf9;
     }
 
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: "Georgia", "Times New Roman", serif;
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
     }
 
     body {
-      min-height: 100vh;
+      min-height: 100dvh;
       display: grid;
       place-items: center;
-      background: var(--bg);
+      background: radial-gradient(circle at top, #fdfaf6 0%, var(--bg) 45%, #f7f2ea 100%);
       color: var(--text);
-      padding: 24px;
+      font-family: "Georgia", "Times New Roman", serif;
+      padding:
+        max(18px, env(safe-area-inset-top))
+        max(16px, env(safe-area-inset-right))
+        max(22px, env(safe-area-inset-bottom))
+        max(16px, env(safe-area-inset-left));
     }
 
     .convite {
       text-align: center;
-      max-width: 680px;
-      width: 100%;
-      border-top: 1px solid #cfc3b6;
-      border-bottom: 1px solid #cfc3b6;
-      padding: 48px 24px;
+      width: min(100%, 720px);
+      background: color-mix(in oklab, var(--card) 92%, white);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      border-radius: 18px;
+      padding: clamp(28px, 6vw, 56px) clamp(18px, 5vw, 44px);
+      box-shadow:
+        0 10px 30px rgba(80, 53, 30, 0.08),
+        0 2px 8px rgba(80, 53, 30, 0.05);
     }
 
     h1 {
-      font-size: clamp(2rem, 5vw, 3rem);
+      font-size: clamp(2rem, 9vw, 3.2rem);
+      line-height: 1.08;
       font-weight: 500;
-      margin-bottom: 20px;
+      margin-bottom: clamp(14px, 3.5vw, 22px);
+      letter-spacing: 0.3px;
       color: var(--accent);
     }
 
     .data {
-      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-      margin-bottom: 28px;
-      letter-spacing: 0.5px;
+      font-size: clamp(1.05rem, 4.4vw, 1.5rem);
+      margin-bottom: clamp(20px, 5vw, 30px);
+      letter-spacing: 0.35px;
     }
 
     .frase {
       font-style: italic;
-      font-size: clamp(1rem, 2.2vw, 1.3rem);
-      margin-bottom: 36px;
+      font-size: clamp(1rem, 4.1vw, 1.25rem);
+      line-height: 1.55;
+      margin-bottom: clamp(26px, 6vw, 38px);
       opacity: 0.9;
+      padding-inline: clamp(4px, 2vw, 24px);
     }
 
     .btn {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       text-decoration: none;
       background: var(--button-bg);
       color: var(--button-text);
+      min-height: 48px;
       padding: 12px 24px;
       border-radius: 999px;
-      font-size: 1rem;
-      transition: transform 0.2s ease, opacity 0.2s ease;
+      font-size: clamp(0.95rem, 3.8vw, 1.02rem);
+      letter-spacing: 0.2px;
+      transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 6px 16px rgba(140, 106, 77, 0.3);
     }
 
     .btn:hover {
       transform: translateY(-1px);
-      opacity: 0.92;
+      opacity: 0.95;
+      box-shadow: 0 8px 20px rgba(140, 106, 77, 0.35);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn:focus-visible {
+      outline: 2px solid color-mix(in oklab, var(--accent) 70%, black);
+      outline-offset: 3px;
+    }
+
+    @media (max-width: 480px) {
+      .convite {
+        border-radius: 16px;
+      }
+
+      .btn {
+        width: min(100%, 280px);
+      }
+    }
+
+    @media (max-width: 360px) {
+      .convite {
+        padding-inline: 14px;
+      }
+
+      h1 {
+        font-size: clamp(1.7rem, 9.2vw, 2rem);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
     }
   </style>
 </head>
