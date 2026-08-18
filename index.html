@@ -49,15 +49,32 @@
       isolation: isolate;
     }
 
+    /* ENTRADA GERAL (FADE + ZOOM) */
+    body.ready .convite {
+      animation: fadeZoomIn 1.2s cubic-bezier(.22,.61,.36,1) both;
+    }
+
+    @keyframes fadeZoomIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.965) translateY(12px);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
     body::before,
     body::after {
       content: "";
       position: fixed;
       inset: -8vmax;
       pointer-events: none;
-      z-index: -2;
+      z-index: -3;
     }
 
+    /* FUNDO FLORAL */
     body::before {
       background:
         radial-gradient(22vmax 22vmax at 9% 9%, var(--petal-1) 0%, transparent 62%),
@@ -86,6 +103,72 @@
       opacity: 0.75;
     }
 
+    /* PARTÍCULAS LEVES */
+    .particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -2;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(130, 165, 206, 0.32);
+      filter: blur(0.3px);
+      animation: floatParticle linear infinite;
+    }
+
+    @keyframes floatParticle {
+      0% {
+        transform: translateY(104vh) translateX(0) scale(0.85);
+        opacity: 0;
+      }
+      10% { opacity: 0.45; }
+      85% { opacity: 0.35; }
+      100% {
+        transform: translateY(-12vh) translateX(22px) scale(1.1);
+        opacity: 0;
+      }
+    }
+
+    /* PÉTALAS CAINDO */
+    .petals {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .petal {
+      position: absolute;
+      top: -12vh;
+      width: 16px;
+      height: 12px;
+      background: radial-gradient(circle at 30% 30%, rgba(191, 214, 240, 0.95), rgba(121, 157, 204, 0.78));
+      border-radius: 70% 30% 65% 35% / 55% 45% 55% 45%;
+      opacity: 0.65;
+      transform-origin: center;
+      filter: blur(0.2px);
+      animation: fallPetal linear infinite;
+    }
+
+    @keyframes fallPetal {
+      0% {
+        transform: translate3d(0, -15vh, 0) rotate(0deg);
+        opacity: 0;
+      }
+      10% { opacity: 0.7; }
+      100% {
+        transform: translate3d(34px, 120vh, 0) rotate(340deg);
+        opacity: 0;
+      }
+    }
+
     .convite {
       text-align: center;
       width: min(100%, 760px);
@@ -99,6 +182,7 @@
         inset 0 0 0 1px rgba(255, 255, 255, 0.75);
       position: relative;
       backdrop-filter: blur(0.5px);
+      opacity: 0;
     }
 
     .convite::before,
@@ -113,12 +197,27 @@
       opacity: 0.75;
     }
 
-    .convite::before {
-      top: 16px;
+    .convite::before { top: 16px; }
+    .convite::after { bottom: 16px; }
+
+    h1,
+    .data,
+    .frase,
+    .btn {
+      opacity: 0;
+      transform: translateY(10px);
     }
 
-    .convite::after {
-      bottom: 16px;
+    /* TEXTO SURGINDO */
+    body.ready h1 { animation: textIn .8s ease forwards .35s; }
+    body.ready .data { animation: textIn .8s ease forwards .55s; }
+    body.ready .frase { animation: textIn .9s ease forwards .75s; }
+
+    @keyframes textIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     h1 {
@@ -167,17 +266,35 @@
       transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
     }
 
+    /* BOTÃO CRESCENDO */
+    body.ready .btn {
+      animation: popIn .65s cubic-bezier(.2,.9,.25,1.2) forwards 1s;
+    }
+
+    @keyframes popIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.85);
+      }
+      75% {
+        opacity: 1;
+        transform: scale(1.05);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
     .btn:hover {
-      transform: translateY(-1px);
+      transform: translateY(-1px) scale(1.02);
       opacity: 0.96;
       box-shadow:
         0 10px 24px rgba(73, 111, 158, 0.37),
         inset 0 1px 0 rgba(255, 255, 255, 0.4);
     }
 
-    .btn:active {
-      transform: translateY(0);
-    }
+    .btn:active { transform: translateY(0) scale(0.99); }
 
     .btn:focus-visible {
       outline: 2px solid color-mix(in oklab, var(--accent) 76%, black);
@@ -186,27 +303,15 @@
 
     @media (max-width: 560px) {
       body::before,
-      body::after {
-        inset: -16vmax;
-      }
-
-      .convite {
-        border-radius: 16px;
-      }
-
-      .btn {
-        width: min(100%, 280px);
-      }
+      body::after { inset: -16vmax; }
+      .convite { border-radius: 16px; }
+      .btn { width: min(100%, 280px); }
+      .petal { width: 14px; height: 10px; }
     }
 
     @media (max-width: 360px) {
-      .convite {
-        padding-inline: 14px;
-      }
-
-      h1 {
-        font-size: clamp(1.7rem, 9.2vw, 2rem);
-      }
+      .convite { padding-inline: 14px; }
+      h1 { font-size: clamp(1.7rem, 9.2vw, 2rem); }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -215,15 +320,62 @@
         transition: none !important;
         scroll-behavior: auto !important;
       }
+      .convite,
+      h1,
+      .data,
+      .frase,
+      .btn { opacity: 1 !important; transform: none !important; }
     }
   </style>
 </head>
 <body>
+  <div class="particles" aria-hidden="true"></div>
+  <div class="petals" aria-hidden="true"></div>
+
   <main class="convite">
     <h1>Felipe &amp; Paula</h1>
     <p class="data">17 Outubro 2026</p>
     <p class="frase">"O amor nunca falha."</p>
     <a class="btn" href="#presentes">Lista de Presentes</a>
   </main>
+
+  <script>
+    const particlesWrap = document.querySelector('.particles');
+    const petalsWrap = document.querySelector('.petals');
+
+    function createParticles(count = 20) {
+      for (let i = 0; i < count; i++) {
+        const el = document.createElement('span');
+        el.className = 'particle';
+        const size = (Math.random() * 4 + 3).toFixed(2);
+        el.style.width = `${size}px`;
+        el.style.height = `${size}px`;
+        el.style.left = `${Math.random() * 100}%`;
+        el.style.animationDuration = `${16 + Math.random() * 20}s`;
+        el.style.animationDelay = `${-Math.random() * 20}s`;
+        el.style.opacity = `${0.2 + Math.random() * 0.35}`;
+        particlesWrap.appendChild(el);
+      }
+    }
+
+    function createPetals(count = 14) {
+      for (let i = 0; i < count; i++) {
+        const el = document.createElement('span');
+        el.className = 'petal';
+        el.style.left = `${Math.random() * 100}%`;
+        el.style.animationDuration = `${18 + Math.random() * 18}s`;
+        el.style.animationDelay = `${-Math.random() * 26}s`;
+        el.style.transform = `rotate(${Math.random() * 360}deg)`;
+        petalsWrap.appendChild(el);
+      }
+    }
+
+    createParticles(22);
+    createPetals(16);
+
+    requestAnimationFrame(() => {
+      document.body.classList.add('ready');
+    });
+  </script>
 </body>
 </html>
