@@ -71,9 +71,83 @@ function startCountdown() {
   const timer = setInterval(update, 1000);
 }
 
+// Modal de confirmação de presença
+function initConfirmModal() {
+  const confirmBtn = document.getElementById('confirmBtn');
+  const modal = document.getElementById('confirmModal');
+  const closeBtn = document.getElementById('closeBtn');
+  const confirmForm = document.getElementById('confirmForm');
+  const dietaryCheckbox = document.getElementById('dietary');
+  const dietaryDetails = document.getElementById('dietaryDetails');
+  const successMessage = document.getElementById('successMessage');
+
+  // Abrir modal
+  confirmBtn.addEventListener('click', () => {
+    modal.removeAttribute('hidden');
+    document.body.style.overflow = 'hidden';
+  });
+
+  // Fechar modal
+  const closeModal = () => {
+    modal.setAttribute('hidden', '');
+    document.body.style.overflow = '';
+  };
+
+  closeBtn.addEventListener('click', closeModal);
+
+  // Fechar ao clicar no overlay
+  const modalOverlay = modal.querySelector('.modal-overlay');
+  modalOverlay.addEventListener('click', closeModal);
+
+  // Mostrar/ocultar campo de restrição alimentar
+  dietaryCheckbox.addEventListener('change', () => {
+    if (dietaryCheckbox.checked) {
+      dietaryDetails.removeAttribute('hidden');
+    } else {
+      dietaryDetails.setAttribute('hidden', '');
+    }
+  });
+
+  // Enviar formulário
+  confirmForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    // Coletar dados
+    const formData = {
+      name: document.getElementById('name').value,
+      email: document.getElementById('email').value,
+      phone: document.getElementById('phone').value,
+      guests: document.getElementById('guests').value,
+      dietary: dietaryCheckbox.checked,
+      dietaryText: document.getElementById('dietaryText').value,
+      timestamp: new Date().toISOString()
+    };
+
+    // Salvar no localStorage
+    const confirmations = JSON.parse(localStorage.getItem('weddingConfirmations') || '[]');
+    confirmations.push(formData);
+    localStorage.setItem('weddingConfirmations', JSON.stringify(confirmations));
+
+    // Mostrar mensagem de sucesso
+    confirmForm.style.display = 'none';
+    successMessage.removeAttribute('hidden');
+
+    // Fechar modal após 2 segundos
+    setTimeout(() => {
+      closeModal();
+      // Resetar form
+      confirmForm.style.display = '';
+      confirmForm.reset();
+      successMessage.setAttribute('hidden', '');
+      dietaryDetails.setAttribute('hidden', '');
+    }, 2000);
+  });
+}
+
 createParticles();
 createPetals();
 startCountdown();
+initConfirmModal();
 
 requestAnimationFrame(() => {
   document.body.classList.add('ready');
